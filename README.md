@@ -1,13 +1,13 @@
 # Nightmare Before Christmas display: building instructions
 
-Interactive, iPad-friendly building instructions for the full 64 x 48 NBC display: baseplates and bridging,
-the snow strip and road, the sideways-masonry courtyard paving, the mountains (layer by layer, peak by peak),
+Interactive, iPad-friendly building instructions for the full 64 x 48 NBC display (v4): the foundation of
+12 Technic 16 x 16 bricks pinned together, the plates, snow strip and road, the sideways-masonry courtyard paving, the mountains (layer by layer, peak by peak),
 the toy shop niche span and the spiral platform.
 
 **Open the instructions:** https://thron21.github.io/nbc-display-instructions/
 
-* 4,456 parts in 95 steps (125 sub-steps of up to 55 pieces), in 8 sections:
-  1. Baseplates and bridging
+* 5,137 parts in 118 steps (155 sub-steps of up to 55 pieces), in 8 sections:
+  1. Foundation: Technic bricks and pins
   2. Snow, road and anchors
   3. Courtyard paving
   4. Mountains: layers 1-4
@@ -17,6 +17,10 @@ the toy shop niche span and the spiral platform.
   8. Mountains: layers 17-25, the peaks
 * The **tan 6 x 6 plate** in the last step is only a **placeholder** that marks where the 21351 spiral sits.
   It is not a part to buy.
+* **Foundation:** one step per white 65803 Technic brick, together with the black 2780 pins that go into its left
+  side and front edge (they show up in the picture sticking out of the brick). Build the back row first, right to left.
+  A brick can't be pushed onto pins from two sides at once, so put the middle row together next to the back row, then
+  push the whole row onto the back row's front pins. Do the same with the front row.
 * Each picture shows the new pieces in colour inside a red box, with everything built earlier in pale grey.
   Tick each piece as you place it; the next one glows yellow. Each row says where the piece goes
   (*col* from the left edge, *row* from the front edge).
@@ -26,10 +30,11 @@ the toy shop niche span and the spiral platform.
 * **Build in 3D** fills the screen with the 3D model. Put the glowing piece on and tap **Placed ✓**. Swipe in from
   the left edge for a quick tick list. When a step is finished, the next one opens.
 
-Ticks are saved in your browser (key prefix `nbcdisp1`).
+Ticks are saved in your browser (key prefix `nbcdisp2`; ticks from the older v3 booklet don't carry over).
 
-The model is the same 4,456 parts as `mountains_v3_full.ldr`, regrouped into booklet steps by
-`source/make_steps.py`. That script checks that every piece connects to something already built when it's placed.
+The model is the same 5,137 parts as `mountains_v4_full.ldr`, regrouped into booklet steps by
+`source/make_steps.py`. That script checks that every piece connects to something already built when it's placed
+(studs, or a pin in a Technic hole).
 The step file and config are in `source/`.
 
 Made with the [MOC instruction kit](https://github.com/thron21/moc-instruction-kit).
