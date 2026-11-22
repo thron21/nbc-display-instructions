@@ -1,8 +1,8 @@
 {
  "title": "Nightmare Before Christmas display",
  "eyebrow": "64 x 48 display on 12 Technic 16 x 16 bricks \u00b7 courtyard, mountains, spiral platform and toy shop niche",
- "intro": "The full display: 12 white Technic 16 x 16 bricks pinned together with 102 black Technic pins, the plates, snow strip and road on top, the sideways-masonry courtyard, then the mountains layer by layer, peak by peak, with the toy shop niche span and the spiral platform. 5,136 pieces to build, plus one tan 6 x 6 plate that only marks where the 21351 spiral sits (it is not a part to buy).",
- "storage_prefix": "nbcdisp2",
+ "intro": "The full display: 12 white Technic 16 x 16 bricks pinned together with 102 black Technic pins, the plates, snow strip and road on top, the sideways-masonry courtyard, then the mountains layer by layer, peak by peak, with the toy shop niche span and the spiral platform. 5,136 pieces to build, plus one tan 6 x 6 plate that only marks where the 21351 spiral sits (it is not a part to buy). Lime pieces are hidden fillers: no face of them shows once the display is finished, so build them in any colour you have spare.",
+ "storage_prefix": "nbcdisp3",
  "sections": [
   {
    "id": "a",
@@ -99,5 +99,15 @@
  "pale": "#C9CFDA",
  "jpeg_quality": 74,
  "output": "/workspace/nbc-display-instructions",
- "work": "build_work"
+ "work": "build_work_lime",
+ "parts_note": {
+  "color": "Lime",
+  "text": "Lime means a hidden filler: this piece can't be seen in the finished display, so any colour works."
+ },
+ "key_extra": [
+  [
+   "Lime pieces",
+   "Hidden fillers. No face of a lime piece shows once the display is finished, so use any colour you have spare."
+  ]
+ ]
 }

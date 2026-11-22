@@ -3,12 +3,14 @@ Sections and STEP ranges are written to sections.json for the kit config."""
 import json, math, collections, sys
 SRC='/workspace/courtyard_mountains_v4/src/v4.json'
 P=json.load(open(SRC))['parts']
+HID=json.load(open('/workspace/courtyard_mountains_v4/lime/hidden.json'))   # pieces with no visible face (lime/hidden.py)
+for i in HID: P[i]['color']=27                                               # Lime = hidden filler, any colour works
 OX,OZ=-640,-480
 def line(p):
     x,y,z=p['pos']; r=p['rot']; r=(-r[0],-r[1],-r[2],r[3],r[4],r[5],-r[6],-r[7],-r[8])
     return '1 %d %g %g %g %s %s.dat'%(p['color'],-(x+OX),y,-(z+OZ),' '.join('%g'%v for v in r),p['id'])
 # check: same lines as the published model
-orig=collections.Counter(l.strip() for l in open('/workspace/courtyard_mountains_v4/mountains_v4_full.ldr') if l.startswith('1 '))
+orig=collections.Counter(l.strip() for l in open('/workspace/courtyard_mountains_v4/mountains_v4_lime.ldr') if l.startswith('1 '))
 mine=collections.Counter(line(p) for p in P); assert orig==mine, 'line mismatch'
 def cen(p): b=p['body'][0]; return ((b[0]+b[3])/2,(b[1]+b[4])/2,(b[2]+b[5])/2)
 def cell(p): x,_,z=cen(p); return (63-int(x//20), int(z//20))      # plan coords: px to the viewer's right, z from the back
@@ -135,7 +137,7 @@ bad,_=check(); print('pieces not connected when placed:',len(bad))
 steps=[s_ for s_ in steps if s_[2]]
 # ---- write ----
 L=['0 Nightmare Before Christmas display: 64x48 on 12 Technic 16x16 bricks, courtyard and mountains (v4)','0 Name: nbc_display_v4_steps.ldr','0 Author: Grok Bot for Jason',
-   '0 // Same 5,137 parts as mountains_v4_full.ldr, regrouped into booklet steps.']
+   '0 // Same 5,137 parts as mountains_v4_lime.ldr (mountains_v4_full.ldr with hidden pieces in Lime), regrouped into booklet steps.']
 secs=[]; k=0
 for sec,t,ps in steps:
     k+=1
