@@ -1,0 +1,103 @@
+{
+ "title": "Nightmare Before Christmas display",
+ "eyebrow": "64 x 48 display \u00b7 courtyard, mountains, spiral platform and toy shop niche",
+ "intro": "The full display: baseplates and bridging plates, the snow strip and road, the sideways-masonry courtyard, then the mountains layer by layer, peak by peak, with the toy shop niche span and the spiral platform. 4,455 pieces to build, plus one tan 6 x 6 plate that only marks where the 21351 spiral sits (it is not a part to buy).",
+ "storage_prefix": "nbcdisp1",
+ "sections": [
+  {
+   "id": "a",
+   "name": "Baseplates and bridging",
+   "model": "nbc_display_steps.ldr",
+   "steps": [
+    1,
+    2
+   ]
+  },
+  {
+   "id": "b",
+   "name": "Snow, road and anchors",
+   "model": "nbc_display_steps.ldr",
+   "steps": [
+    3,
+    8
+   ]
+  },
+  {
+   "id": "c",
+   "name": "Courtyard paving",
+   "model": "nbc_display_steps.ldr",
+   "steps": [
+    9,
+    11
+   ]
+  },
+  {
+   "id": "d",
+   "name": "Mountains: layers 1-4",
+   "model": "nbc_display_steps.ldr",
+   "steps": [
+    12,
+    27
+   ]
+  },
+  {
+   "id": "e",
+   "name": "Mountains: layers 5-8",
+   "model": "nbc_display_steps.ldr",
+   "steps": [
+    28,
+    43
+   ]
+  },
+  {
+   "id": "f",
+   "name": "Mountains: layers 9-12",
+   "model": "nbc_display_steps.ldr",
+   "steps": [
+    44,
+    59
+   ]
+  },
+  {
+   "id": "g",
+   "name": "Mountains: layers 13-16, niche span and spiral platform",
+   "model": "nbc_display_steps.ldr",
+   "steps": [
+    60,
+    78
+   ]
+  },
+  {
+   "id": "h",
+   "name": "Mountains: layers 17-25, the peaks",
+   "model": "nbc_display_steps.ldr",
+   "steps": [
+    79,
+    95
+   ]
+  }
+ ],
+ "ldraw_library": "/workspace/ldraw/ldraw",
+ "leocad": "/usr/local/bin/leocad",
+ "parts_panel": true,
+ "build_in_3d": true,
+ "step_titles": true,
+ "max_per_substep": 55,
+ "order": "file",
+ "camera": {
+  "azimuth": 35,
+  "elevation": 33,
+  "fov": 30,
+  "px_per_stud": "auto",
+  "max_render_px": 3000
+ },
+ "frame": [
+  900,
+  620
+ ],
+ "background": "#D5C7AC",
+ "pale": "#C9CFDA",
+ "jpeg_quality": 74,
+ "output": "/workspace/nbc-display-instructions",
+ "work": "build_work"
+}
