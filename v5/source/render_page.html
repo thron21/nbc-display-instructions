@@ -1,0 +1,87 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body style="margin:0">
+<script src="parts.js"></script>
+<script type="module">
+import * as THREE from './three.module.js';
+THREE.ColorManagement.enabled = false;
+const PM = window.MOCKIT_PARTS;
+const bin = Uint8Array.from(atob(PM.b64), c => c.charCodeAt(0)).buffer;
+const geo = {};
+for (const m of PM.meta) {
+  const v = new Int16Array(bin, m.v, m.nv * 3), t = new Uint16Array(bin, m.t, m.nt * 3), e = new Uint16Array(bin, m.e, m.ne * 2);
+  const pos = new Float32Array(m.nv * 3); for (let i = 0; i < pos.length; i++) pos[i] = v[i] / 8;
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setIndex(new THREE.BufferAttribute(new Uint32Array(t), 1));
+  g.computeVertexNormals(); g.computeBoundingBox();
+  // flat normals look closer to LeoCAD: use non-indexed for shading
+  const gf = g.toNonIndexed(); gf.computeVertexNormals();
+  const ge = new THREE.BufferGeometry(); ge.setAttribute('position', new THREE.BufferAttribute(pos, 3)); ge.setIndex(new THREE.BufferAttribute(new Uint32Array(e), 1));
+  geo[m.n] = { g, gf, ge };
+}
+const cv = document.createElement('canvas'); document.body.appendChild(cv);
+const rAA = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true, preserveDrawingBuffer: true });
+const cv2 = document.createElement('canvas'); document.body.appendChild(cv2);
+const rNo = new THREE.WebGLRenderer({ canvas: cv2, antialias: false, alpha: true, preserveDrawingBuffer: true });
+for (const r of [rAA, rNo]) { r.outputColorSpace = THREE.LinearSRGBColorSpace; r.setClearColor(0x000000, 0); r.setPixelRatio(1); }
+const matCache = {};
+function mat(kind, hex) {
+  const k = kind + hex; if (matCache[k]) return matCache[k];
+  let m;
+  if (kind === 'flat') m = new THREE.MeshBasicMaterial({ color: new THREE.Color(hex), side: THREE.DoubleSide });
+  else if (kind === 'edge') m = new THREE.LineBasicMaterial({ color: new THREE.Color(hex) });
+  else m = new THREE.MeshLambertMaterial({ color: new THREE.Color(hex), side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
+  return matCache[k] = m;
+}
+function placeMatrix(p) { // p = [part, x,y,z, a..i, color, edge]
+  const m = new THREE.Matrix4(); m.set(p[4], p[5], p[6], p[1], p[7], p[8], p[9], p[2], p[10], p[11], p[12], p[3], 0, 0, 0, 1); return m;
+}
+function build(pieces, kind, edges) {
+  const sc = new THREE.Scene();
+  if (kind !== 'flat') {
+    sc.add(new THREE.AmbientLight(0xffffff, 1.9));
+    const d = new THREE.DirectionalLight(0xffffff, 1.7); d.position.set(-0.45, -1, -0.6); sc.add(d); sc.add(d.target);
+    const d2 = new THREE.DirectionalLight(0xffffff, 0.5); d2.position.set(0.6, -0.4, 0.5); sc.add(d2); sc.add(d2.target);
+  }
+  const objs = [];
+  for (const p of pieces) {
+    const G = geo[p[0]]; if (!G) { objs.push(null); continue; }
+    const grp = new THREE.Group(); grp.matrixAutoUpdate = false; grp.matrix.copy(placeMatrix(p));
+    grp.add(new THREE.Mesh(kind === 'flat' ? G.g : G.gf, mat(kind, p[13])));
+    if (edges) grp.add(new THREE.LineSegments(G.ge, mat('edge', p[14])));
+    sc.add(grp); objs.push(grp);
+  }
+  sc.updateMatrixWorld(true);
+  return { sc, objs };
+}
+function camera(j, W, H) {
+  let cam;
+  if (j.ortho) { const s = j.ortho; cam = new THREE.OrthographicCamera(-s.w / 2, s.w / 2, s.h / 2, -s.h / 2, -100000, 100000); }
+  else cam = new THREE.PerspectiveCamera(j.fov, W / H, j.near || 10, j.far || 100000);
+  cam.position.set(...j.pos); cam.up.set(...(j.up || [0, -1, 0])); cam.lookAt(new THREE.Vector3(...j.target)); cam.updateMatrixWorld(true);
+  if (j.mirror) { cam.projectionMatrix.multiply(new THREE.Matrix4().makeScale(-1, 1, 1)); }
+  return cam;
+}
+function shot(r, sc, cam, W, H) { r.setSize(W, H, false); if (cam.isPerspectiveCamera) { cam.aspect = W / H; cam.updateProjectionMatrix(); } r.render(sc, cam); return r.domElement.toDataURL('image/png'); }
+window.renderJob = (j) => {
+  const out = {};
+  const flat = j.mode === 'flat';
+  const { sc, objs } = build(j.pieces, flat ? 'flat' : 'lit', !flat && j.edges !== false);
+  const cam = camera(j, j.W, j.H);
+  if (j.mirror) { cam.updateProjectionMatrix = () => {}; }
+  out.main = shot(flat ? rNo : rAA, sc, cam, j.W, j.H);
+  if (j.solo) {
+    out.solos = [];
+    const sw = Math.floor(j.W / 2), sh = Math.floor(j.H / 2);
+    objs.forEach(o => o && (o.visible = false));
+    for (const i of j.solo) { const o = objs[i]; if (o) o.visible = true; out.solos.push(shot(rNo, sc, cam, sw, sh)); if (o) o.visible = false; }
+  }
+  sc.traverse(o => { if (o.isMesh || o.isLineSegments) { /* shared geometry/materials: nothing to dispose */ } });
+  return out;
+};
+window.fitJob = (j) => { // thumbnails: camera from angles, fitted to the part
+  const G = geo[j.part]; const bb = G.g.boundingBox; const c = new THREE.Vector3(); bb.getCenter(c); const r = bb.getSize(new THREE.Vector3()).length() / 2;
+  const lat = j.lat * Math.PI / 180, lon = j.lon * Math.PI / 180;
+  const dir = new THREE.Vector3(Math.cos(lat) * Math.sin(lon), -Math.sin(lat), -Math.cos(lat) * Math.cos(lon));
+  const d = r / Math.sin(15 * Math.PI / 180) * 1.05;
+  return window.renderJob({ W: j.W, H: j.H, fov: 30, pos: [c.x + dir.x * d, c.y + dir.y * d, c.z + dir.z * d], target: [c.x, c.y, c.z], pieces: [[j.part, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, j.color, j.edge]], mode: 'shaded' });
+};
+window.ready = true;
+</script></body></html>
