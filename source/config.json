@@ -1,13 +1,13 @@
 {
  "title": "Nightmare Before Christmas display",
  "eyebrow": "64 x 48 display on 12 Technic 16 x 16 bricks \u00b7 courtyard, mountains, spiral platform and toy shop niche",
- "intro": "The full display: 12 white Technic 16 x 16 bricks pinned together with 102 black Technic pins, the plates, snow strip and road on top, the sideways-masonry courtyard, then the mountains layer by layer, peak by peak, with the toy shop niche span and the spiral platform. 5,136 pieces to build, plus one tan 6 x 6 plate that only marks where the 21351 spiral sits (it is not a part to buy). Lime pieces are hidden fillers: no face of them shows once the display is finished, so build them in any colour you have spare.",
- "storage_prefix": "nbcdisp3",
+ "intro": "The full display: 12 white Technic 16 x 16 bricks pinned together with 102 black Technic pins, the plates, snow strip and road on top, the sideways-masonry courtyard, then the mountains layer by layer, peak by peak, with the toy shop niche span and the spiral platform. The mountains are hollow: inside each one only the support pillars that hold up the courses above are built. 4,788 pieces to build, plus one tan 6 x 6 plate that only marks where the 21351 spiral sits (it is not a part to buy). Lime pieces are hidden (mostly the inner support pillars): no face of them shows once the display is finished, so build them in any colour you have spare.",
+ "storage_prefix": "nbcdisp5",
  "sections": [
   {
    "id": "a",
    "name": "Foundation: Technic bricks and pins",
-   "model": "nbc_display_v4_steps.ldr",
+   "model": "nbc_display_v5_steps.ldr",
    "steps": [
     1,
     12
@@ -16,7 +16,7 @@
   {
    "id": "b",
    "name": "Snow, road and anchors",
-   "model": "nbc_display_v4_steps.ldr",
+   "model": "nbc_display_v5_steps.ldr",
    "steps": [
     13,
     18
@@ -25,7 +25,7 @@
   {
    "id": "c",
    "name": "Courtyard paving",
-   "model": "nbc_display_v4_steps.ldr",
+   "model": "nbc_display_v5_steps.ldr",
    "steps": [
     19,
     21
@@ -34,46 +34,46 @@
   {
    "id": "d",
    "name": "Mountains: layers 1-4",
-   "model": "nbc_display_v4_steps.ldr",
+   "model": "nbc_display_v5_steps.ldr",
    "steps": [
     22,
-    41
+    40
    ]
   },
   {
    "id": "e",
    "name": "Mountains: layers 5-8",
-   "model": "nbc_display_v4_steps.ldr",
+   "model": "nbc_display_v5_steps.ldr",
    "steps": [
-    42,
-    61
+    41,
+    60
    ]
   },
   {
    "id": "f",
    "name": "Mountains: layers 9-12",
-   "model": "nbc_display_v4_steps.ldr",
+   "model": "nbc_display_v5_steps.ldr",
    "steps": [
-    62,
-    81
+    61,
+    80
    ]
   },
   {
    "id": "g",
    "name": "Mountains: layers 13-16, niche span and spiral platform",
-   "model": "nbc_display_v4_steps.ldr",
+   "model": "nbc_display_v5_steps.ldr",
    "steps": [
-    82,
-    101
+    81,
+    100
    ]
   },
   {
    "id": "h",
    "name": "Mountains: layers 17-25, the peaks",
-   "model": "nbc_display_v4_steps.ldr",
+   "model": "nbc_display_v5_steps.ldr",
    "steps": [
-    102,
-    118
+    101,
+    117
    ]
   }
  ],
@@ -82,7 +82,7 @@
  "parts_panel": true,
  "build_in_3d": true,
  "step_titles": true,
- "max_per_substep": 55,
+ "max_per_substep": 14,
  "order": "file",
  "camera": {
   "azimuth": 35,
@@ -98,16 +98,16 @@
  "background": "#D5C7AC",
  "pale": "#C9CFDA",
  "jpeg_quality": 74,
- "output": "/workspace/nbc-display-instructions",
+ "output": "/workspace/courtyard_mountains_v5_hollow/instr/site_out",
  "work": "build_work_lime",
  "parts_note": {
   "color": "Lime",
-  "text": "Lime means a hidden filler: this piece can't be seen in the finished display, so any colour works."
+  "text": "Lime means a hidden piece (mostly inner support pillars): it can't be seen in the finished display, so any colour works."
  },
  "key_extra": [
   [
    "Lime pieces",
-   "Hidden fillers. No face of a lime piece shows once the display is finished, so use any colour you have spare."
+   "Hidden pieces, mostly the support pillars inside the hollow mountains. No face of a lime piece shows once the display is finished, so use any colour you have spare."
   ]
  ]
 }

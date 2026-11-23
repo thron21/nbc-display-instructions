@@ -1,16 +1,16 @@
 """Re-group mountains_v3_full.ldr into booklet steps of ~30-55 pieces (same 4,456 lines, new STEP order).
 Sections and STEP ranges are written to sections.json for the kit config."""
 import json, math, collections, sys
-SRC='/workspace/courtyard_mountains_v4/src/v4.json'
+SRC='/workspace/courtyard_mountains_v5_hollow/src/v5.json'
 P=json.load(open(SRC))['parts']
-HID=json.load(open('/workspace/courtyard_mountains_v4/lime/hidden.json'))   # pieces with no visible face (lime/hidden.py)
+HID=json.load(open('/workspace/courtyard_mountains_v5_hollow/lime/lime.json'))   # pieces with no visible face (lime/hidden.py)
 for i in HID: P[i]['color']=27                                               # Lime = hidden filler, any colour works
 OX,OZ=-640,-480
 def line(p):
     x,y,z=p['pos']; r=p['rot']; r=(-r[0],-r[1],-r[2],r[3],r[4],r[5],-r[6],-r[7],-r[8])
     return '1 %d %g %g %g %s %s.dat'%(p['color'],-(x+OX),y,-(z+OZ),' '.join('%g'%v for v in r),p['id'])
 # check: same lines as the published model
-orig=collections.Counter(l.strip() for l in open('/workspace/courtyard_mountains_v4/mountains_v4_lime.ldr') if l.startswith('1 '))
+orig=collections.Counter(l.strip() for l in open('/workspace/courtyard_mountains_v5_hollow/mountains_v5_hollow_lime.ldr') if l.startswith('1 '))
 mine=collections.Counter(line(p) for p in P); assert orig==mine, 'line mismatch'
 def cen(p): b=p['body'][0]; return ((b[0]+b[3])/2,(b[1]+b[4])/2,(b[2]+b[5])/2)
 def cell(p): x,_,z=cen(p); return (63-int(x//20), int(z//20))      # plan coords: px to the viewer's right, z from the back
@@ -48,7 +48,7 @@ for j in range(nJ):
         if j>0 and i==0: t=f'{ROW[j].capitalize()} row (put it together next to the base): brick 1 of {nI}' + (': '+' and '.join(what) if what else '')
         if j>0 and i==nI-1: t+=f'. Then push the whole {ROW[j]} row onto the pins along the front of the {ROW[j-1]} row'
         add(S1,t,[bricks[(i,j)]]+sorted(side,key=lambda p:p['pos'][2])+sorted(front,key=lambda p:p['pos'][0]))
-l2=sweep([p for p in P if role(p).startswith('L2 reserved')])
+l2=sweep([p for p in P if role(p).startswith('L2 reserved') or (role(p).startswith('hollow') and layer(p)<0)])
 third=lambda p:min(2,int((63-cell(p)[0])/64*3))
 for i,n in enumerate(['left','middle','right']):
     add(S2,f'Plates on top of the Technic bricks: {n} part',[p for p in l2 if third(p)==2-i])
@@ -60,7 +60,7 @@ pav=[p for p in P if role(p).startswith('paver')]
 for i,n in enumerate(['left','middle','right']):
     ps=[p for p in pav if third(p)==2-i]
     add(S3,f'Sideways paving: {n} part',sorted(ps,key=lambda p:(cen(p)[2],cen(p)[0])))
-mtn=[p for p in P if not any(role(p).startswith(r) for r in ('65803','Technic pin','baseplate','L1','L2','road','anchor','paver','SPIRAL'))]
+mtn=[p for p in P if not (role(p).startswith('hollow') and layer(p)<0) and not any(role(p).startswith(r) for r in ('65803','Technic pin','baseplate','L1','L2','road','anchor','paver','SPIRAL'))]
 by=collections.defaultdict(list)
 for p in mtn: by[layer(p)].append(p)
 BANDS=[(0,4,'Mountains: layers 1-4'),(4,8,'Mountains: layers 5-8'),(8,12,'Mountains: layers 9-12'),(12,16,'Mountains: layers 13-16, niche span and spiral platform'),(16,30,'Mountains: layers 17-25, the peaks')]
@@ -136,8 +136,8 @@ for it in range(10):
 bad,_=check(); print('pieces not connected when placed:',len(bad))
 steps=[s_ for s_ in steps if s_[2]]
 # ---- write ----
-L=['0 Nightmare Before Christmas display: 64x48 on 12 Technic 16x16 bricks, courtyard and mountains (v4)','0 Name: nbc_display_v4_steps.ldr','0 Author: Grok Bot for Jason',
-   '0 // Same 5,137 parts as mountains_v4_lime.ldr (mountains_v4_full.ldr with hidden pieces in Lime), regrouped into booklet steps.']
+L=['0 Nightmare Before Christmas display: 64x48 on 12 Technic 16x16 bricks, courtyard and mountains (v5, hollow)','0 Name: nbc_display_v5_steps.ldr','0 Author: Grok Bot for Jason',
+   '0 // Same 4,789 parts as mountains_v5_hollow_lime.ldr (mountains_v5_hollow_full.ldr with hidden pieces in Lime), regrouped into booklet steps.']
 secs=[]; k=0
 for sec,t,ps in steps:
     k+=1
@@ -148,8 +148,8 @@ for sec,t,ps in steps:
         if role(p).startswith('SPIRAL'): L.append('0 !MOCKIT NAME Spiral placeholder (tan 6 x 6 plate): not a part to buy')
         L.append(line(p))
     L.append('0 STEP')
-open('/workspace/courtyard_mountains_v4/instr/nbc_display_v4_steps.ldr','w').write('\n'.join(L)+'\n')
-json.dump(secs,open('/workspace/courtyard_mountains_v4/instr/sections.json','w'),indent=1)
+open('/workspace/courtyard_mountains_v5_hollow/instr/nbc_display_v5_steps.ldr','w').write('\n'.join(L)+'\n')
+json.dump(secs,open('/workspace/courtyard_mountains_v5_hollow/instr/sections.json','w'),indent=1)
 sizes=[len(s[2]) for s in steps]
 print(len(steps),'steps in',len(secs),'sections; sizes min/max',min(sizes),max(sizes))
 for s in secs: print(s)

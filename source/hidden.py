@@ -1,7 +1,8 @@
 """Find pieces with no visible face in the finished v4 model (voxel grid at 4 LDU, flood fill of outside air)."""
 import json, collections, numpy as np
 from scipy import ndimage
-P=json.load(open('/workspace/courtyard_mountains_v4/src/v4.json'))['parts']
+import sys
+P=json.load(open(sys.argv[1]))['parts']
 V=4; X0,Y0,Z0=-8,-624,-8; NX,NY,NZ=(1280+16)//V,(32+624+8)//V,(960+16)//V
 G=-np.ones((NX,NY,NZ),np.int32)
 SLOPE=('cap ','snow curved','snow drift','rock face sideways cheese')
@@ -30,13 +31,14 @@ for ax in range(3):
 KEEP=('65803','Technic pin','paver','rock face','SPIRAL')+SLOPE
 hidden=[i for i,p in enumerate(P) if i not in vis and p['id']!='2780' and not p['role'].startswith(KEEP)]
 # sanity: every slope base and sideways rock piece should sit against something
+json.dump(sorted(vis),open(sys.argv[2].replace('.json','_visible.json'),'w'))
 print('pieces:',len(P),'visible:',len(vis),'hidden candidates:',len(hidden))
 print('enclosed air pockets (not outside):', int((air&~outside).sum()), 'voxels')
 c=collections.Counter((P[i]['id'],P[i]['role'].split(' L')[0] if P[i]['role'].startswith('mountain') else P[i]['role']) for i in hidden)
 for k,v in sorted(c.items(),key=lambda x:-x[1]): print(v,k)
 excl_hidden=collections.Counter(P[i]['role'][:30] for i,p in enumerate(P) if i not in vis and p['id']!='2780' and p['role'].startswith(KEEP))
 print('hidden but kept as is:',dict(excl_hidden))
-json.dump(hidden,open('hidden.json','w'))
+json.dump(hidden,open(sys.argv[2],'w'))
 sl=ndimage.find_objects(lab); sizes=ndimage.sum(air,lab,index=range(1,lab.max()+1))
 big=sorted([(int(s),k+1) for k,s in enumerate(sizes) if k+1!=lab[0,0,0]],reverse=True)
 print('pockets:',len(big))
