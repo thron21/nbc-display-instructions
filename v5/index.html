@@ -218,11 +218,56 @@ body.b3m-on .ck-back.on{opacity:1;pointer-events:auto}
 .ck-sw,.b3m-ck .ck-sw{flex:none;width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.3);display:inline-block}
 @media (prefers-reduced-motion:reduce){.ck,.ck-back,.b3m-toast{transition:none}}
 @media (max-width:600px){.b3m-tools button{padding:8px 10px;font-size:13px}.b3m-t{font-size:18px}.b3m-mid{width:calc(100vw - 160px)}}
-</style><style id="pin-picture">.step{overflow:clip}.shot{position:sticky;top:0;z-index:2}</style></head><body>
+</style><style id="pin-picture">.step{overflow:clip}.shot{position:sticky;top:0;z-index:2}</style><style id="allparts">
+/* All parts panel (top) */
+.ap-tab{position:fixed;top:0;left:14px;z-index:28;padding:7px 16px 9px;margin-top:env(safe-area-inset-top,0px);border:1px solid var(--line);border-top:0;border-radius:0 0 10px 10px;background:var(--paper);color:var(--ink);box-shadow:0 2px 10px rgba(0,0,0,.15);font:700 13px/1 var(--display);letter-spacing:.03em;cursor:pointer;-webkit-tap-highlight-color:transparent}
+body.b3m-on .ap-tab{display:none}
+.ap-back{position:fixed;inset:0;z-index:42;background:rgba(10,14,20,.35);opacity:0;pointer-events:none;transition:opacity .2s}
+.ap-back.on{opacity:1;pointer-events:auto}
+.ap{position:fixed;top:0;left:50%;z-index:43;width:min(760px,100vw);max-height:88vh;transform:translate(-50%,-105%);transition:transform .24s ease-out;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;box-shadow:0 8px 28px rgba(0,0,0,.25);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.ap.on{transform:translate(-50%,0)}
+.ap:not(.on){visibility:hidden;transition:transform .24s ease-out,visibility 0s .24s}
+html.ap-lock,html.ap-lock body{overflow:hidden}
+.ap-h{display:flex;align-items:start;gap:10px;padding:14px 16px 10px;border-bottom:3px solid var(--ink)}
+.ap-h div{flex:1;min-width:0}
+.ap-e{margin:0 0 2px;text-transform:uppercase;letter-spacing:.09em;font-size:11px;font-weight:600;color:var(--accent)}
+.ap-t{margin:0;font:800 22px/1.15 var(--display)}
+.ap-s{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.ap-x{flex:none;width:36px;height:36px;border-radius:999px;border:1px solid var(--line);background:var(--callout);color:var(--ink);font:700 20px/1 var(--body);cursor:pointer}
+.ap-f{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line)}
+.ap-seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.ap-seg button{border:0;background:transparent;color:var(--ink);font:600 13px/1 var(--body);padding:9px 12px;cursor:pointer}
+.ap-seg button.on{background:var(--ink);color:var(--paper)}
+.ap-need{display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer}
+.ap-need input{width:18px;height:18px}
+.ap-l{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 12px 18px;overscroll-behavior:contain}
+.ap-g h3{display:flex;align-items:center;gap:8px;margin:14px 4px 6px;font:800 16px/1.2 var(--display)}
+.ap-sw{width:16px;height:16px;border-radius:4px;border:1px solid rgba(0,0,0,.3);flex:none}
+.ap-gc{margin-left:auto;font:500 12px/1 var(--body);color:var(--muted);font-variant-numeric:tabular-nums}
+.ap-g ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.ap-g li{display:grid;grid-template-columns:auto 48px minmax(0,1fr) auto;align-items:center;gap:10px;background:var(--callout);border-radius:6px;padding:5px 10px 5px 8px}
+.ap-q{font:800 18px/1 var(--display);min-width:44px;text-align:right;font-variant-numeric:tabular-nums}
+.ap-g .pp{width:48px;height:48px;border-radius:4px;background-size:cover;display:block;grid-row:auto}
+.ap-i{min-width:0;display:grid;gap:1px}.ap-p{font-weight:600;font-size:14px}.ap-k{font-size:12px;color:var(--muted)}
+.ap-d{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ap-g li.done{background:var(--done)}.ap-g li.done .ap-q,.ap-g li.done .ap-i,.ap-g li.done .pp{opacity:.55}.ap-g li.done .ap-d{color:#2f7d32;font-weight:700}
+.ap-empty{padding:20px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.ap,.ap-back{transition:none}}
+/* Parts on the left, ticks on the right (page and Build in 3D) */
+.pq-tab{right:auto;left:0;border:1px solid var(--line);border-left:0;border-radius:0 10px 10px 0;box-shadow:2px 2px 10px rgba(0,0,0,.15)}
+.pq{right:auto;left:0;border-left:0;border-right:1px solid var(--line);box-shadow:6px 0 24px rgba(0,0,0,.2);transform:translateX(-105%)}
+.pq.on{transform:none}
+.pq-edge{right:auto!important;left:0!important}
+body.b3m-on .ck-tab{left:auto;right:0;border:1px solid var(--line,#ddd);border-right:0;border-radius:10px 0 0 10px;box-shadow:-2px 2px 10px rgba(0,0,0,.15)}
+.ck{left:auto;right:0;border-right:0;border-left:1px solid var(--line,#ddd);box-shadow:-6px 0 24px rgba(0,0,0,.2);transform:translateX(105%)}
+.ck.on{transform:none}
+body.b3m-on .ck-edge{left:auto!important;right:0!important}
+</style>
+</head><body>
 <main class="wrap">
 <header class="intro"><p class="eyebrow">64 x 48 display on 12 Technic 16 x 16 bricks · courtyard, mountains, spiral platform and toy shop niche</p><h1>Nightmare Before Christmas display</h1>
 <p>The full display: 12 white Technic 16 x 16 bricks pinned together with 102 black Technic pins, the plates, snow strip and road on top, the sideways-masonry courtyard, then the mountains layer by layer, peak by peak, with the toy shop niche span and the spiral platform. 5,136 pieces to build, plus one tan 6 x 6 plate that only marks where the 21351 spiral sits (it is not a part to buy). Lime pieces are hidden fillers: no face of them shows once the display is finished, so build them in any colour you have spare.</p>
-<div class="key"><div class="k"><b><span class="redbox"></span>Red box</b><span>Where this sub-step's pieces go. New pieces are in full colour; everything built earlier is pale blue-grey.</span></div><div class="k"><b>Coordinates</b><span>Seen from the front: <b>col</b> counts studs from the left edge, <b>row</b> counts from the front edge. A range like col 5-8 is the piece's full length.</span></div><div class="k"><b>Tick lists</b><span>Tap a row when the piece is on. The next piece to place glows yellow in the picture. Ticks are saved in this browser.</span></div><div class="k"><b>3D and step by step</b><span>Tap 3D on any picture to turn the model with your finger. Step by step shows one sub-step at a time; swipe the picture to move on.</span></div><div class="k"><b>Parts</b><span>Tap the Parts tab on the right, or swipe in from the right edge, to see the pieces for the step you are on.</span></div><div class="k"><b>Lime pieces</b><span>Hidden fillers. No face of a lime piece shows once the display is finished, so use any colour you have spare.</span></div><div class="k"><b>Build in 3D</b><span>Fills the screen with the 3D model. The next piece glows yellow: put it on and tap Placed. Swipe in from the left edge for the tick list.</span></div></div>
+<div class="key"><div class="k"><b><span class="redbox"></span>Red box</b><span>Where this sub-step's pieces go. New pieces are in full colour; everything built earlier is pale blue-grey.</span></div><div class="k"><b>Coordinates</b><span>Seen from the front: <b>col</b> counts studs from the left edge, <b>row</b> counts from the front edge. A range like col 5-8 is the piece's full length.</span></div><div class="k"><b>Tick lists</b><span>Tap a row when the piece is on. The next piece to place glows yellow in the picture. Ticks are saved in this browser.</span></div><div class="k"><b>3D and step by step</b><span>Tap 3D on any picture to turn the model with your finger. Step by step shows one sub-step at a time; swipe the picture to move on.</span></div><div class="k"><b>Parts</b><span>Tap the Parts tab on the left, or swipe in from the left edge, to see the pieces for the step you are on. <b>All parts</b> at the top of the screen lists every piece by colour, with how many are placed.</span></div><div class="k"><b>Lime pieces</b><span>Hidden fillers. No face of a lime piece shows once the display is finished, so use any colour you have spare.</span></div><div class="k"><b>Build in 3D</b><span>Fills the screen with the 3D model. The next piece glows yellow: put it on and tap Placed. Swipe in from the right edge for the tick list.</span></div></div>
 <nav aria-label="Sections"><a href="#sec-a">Foundation: Technic bricks and pins</a><a href="#sec-b">Snow, road and anchors</a><a href="#sec-c">Courtyard paving</a><a href="#sec-d">Mountains: layers 1-4</a><a href="#sec-e">Mountains: layers 5-8</a><a href="#sec-f">Mountains: layers 9-12</a><a href="#sec-g">Mountains: layers 13-16, niche span and spiral platform</a><a href="#sec-h">Mountains: layers 17-25, the peaks</a></nav>
 </header>
 <section class="sec" id="sec-a"><header class="sechead"><div><h2>Foundation: Technic bricks and pins</h2></div><p class="count">12 steps · 12 sub-steps · 114 pieces</p></header>
@@ -1182,7 +1227,7 @@ if(!window.MOCKITNAV&&'IntersectionObserver' in window){
 /* swipe in from the right edge to open (a 24px strip with touch-action:none catches it, so the 3D view and
    page scrolling never see that swipe); swipe the panel right to close */
 var sx=0,sy=0,mode=null,dx=0,W=0;
-function inEdge(x){ return x>=window.innerWidth-EDGE; }
+function inEdge(x){ return x<=EDGE; }
 document.addEventListener('touchstart',function(e){
   window.MOCKIT_EDGE=false; if(e.touches.length!==1) return;
   var t=e.touches[0]; sx=t.clientX; sy=t.clientY; dx=0; mode=null;
@@ -1191,15 +1236,15 @@ document.addEventListener('touchstart',function(e){
 },{capture:true,passive:true});
 document.addEventListener('touchmove',function(e){
   if(!mode) return; var t=e.touches[0]; dx=t.clientX-sx; var dy=t.clientY-sy;
-  if(mode==='edge?'){ if(Math.abs(dx)>8||Math.abs(dy)>8){ mode=(dx<0&&Math.abs(dx)>Math.abs(dy))?'edge':null; if(mode){ render(); W=pane.offsetWidth; pane.classList.add('drag'); back.classList.add('on'); } else window.MOCKIT_EDGE=false; } }
-  else if(mode==='pane?'){ if(Math.abs(dx)>8||Math.abs(dy)>8){ mode=(dx>0&&Math.abs(dx)>Math.abs(dy))?'pane':null; if(mode){ W=pane.offsetWidth; pane.classList.add('drag'); } } }
-  if(mode==='edge'){ e.preventDefault(); pane.style.transform='translateX('+Math.max(0,W+dx)+'px)'; }
-  else if(mode==='pane'){ e.preventDefault(); pane.style.transform='translateX('+Math.max(0,dx)+'px)'; }
+  if(mode==='edge?'){ if(Math.abs(dx)>8||Math.abs(dy)>8){ mode=(dx>0&&Math.abs(dx)>Math.abs(dy))?'edge':null; if(mode){ render(); W=pane.offsetWidth; pane.classList.add('drag'); back.classList.add('on'); } else window.MOCKIT_EDGE=false; } }
+  else if(mode==='pane?'){ if(Math.abs(dx)>8||Math.abs(dy)>8){ mode=(dx<0&&Math.abs(dx)>Math.abs(dy))?'pane':null; if(mode){ W=pane.offsetWidth; pane.classList.add('drag'); } } }
+  if(mode==='edge'){ e.preventDefault(); pane.style.transform='translateX('+Math.min(0,dx-W)+'px)'; }
+  else if(mode==='pane'){ e.preventDefault(); pane.style.transform='translateX('+Math.min(0,dx)+'px)'; }
 },{capture:true,passive:false});
 function end(){
   var m=mode; mode=null; window.MOCKIT_EDGE=false; pane.classList.remove('drag');
-  if(m==='edge') setOpen(-dx>60);
-  else if(m==='pane') setOpen(!(dx>70));
+  if(m==='edge') setOpen(dx>60);
+  else if(m==='pane') setOpen(!(dx<-70));
 }
 document.addEventListener('touchend',end,true); document.addEventListener('touchcancel',end,true);
 render();
@@ -1235,7 +1280,7 @@ cuei.appendChild(cuen); cuei.appendChild(cuek); cue.appendChild(cuep); cue.appen
 var pl=btn('b3m-pl'), pl1=el('span','b3m-p1','Placed ✓'), pl2=el('span','b3m-p2','next piece'); pl.appendChild(pl1); pl.appendChild(pl2);
 mid.appendChild(cue); mid.appendChild(pl); bot.appendChild(pv); bot.appendChild(mid); bot.appendChild(nx);
 var toast=el('div','b3m-toast'); toast.setAttribute('role','status'); toast.setAttribute('aria-live','polite');
-var hint=el('div','b3m-hint','Drag to turn · pinch to zoom · two fingers to move · swipe in from the left for the tick list');
+var hint=el('div','b3m-hint','Drag to turn · pinch to zoom · two fingers to move · swipe in from the right for the tick list');
 [host,msg,top,bot,toast,hint].forEach(function(e){root.appendChild(e);});
 document.body.appendChild(root);
 
@@ -1363,22 +1408,87 @@ var sx0=0,sy0=0,mode=null,dx=0,W=0;
 document.addEventListener('touchstart',function(e){
   if(!on||e.touches.length!==1) { mode=null; return; }
   var t=e.touches[0]; sx0=t.clientX; sy0=t.clientY; dx=0; mode=null;
-  if(!ckOpen&&(e.target===cedge||sx0<=EDGE)&&!(window.MOCKITPARTS&&MOCKITPARTS.isOpen())){ mode='edge?'; window.MOCKIT_EDGE=true; }
+  if(!ckOpen&&(e.target===cedge||sx0>=window.innerWidth-EDGE)&&!(window.MOCKITPARTS&&MOCKITPARTS.isOpen())){ mode='edge?'; window.MOCKIT_EDGE=true; }
   else if(ckOpen&&cpane.contains(e.target)) mode='pane?';
 },{capture:true,passive:true});
 document.addEventListener('touchmove',function(e){
   if(!mode) return; var t=e.touches[0]; dx=t.clientX-sx0; var dy=t.clientY-sy0;
-  if(mode==='edge?'){ if(Math.abs(dx)>8||Math.abs(dy)>8){ mode=(dx>0&&Math.abs(dx)>Math.abs(dy))?'edge':null; if(mode){ renderList(); W=cpane.offsetWidth; cpane.classList.add('drag'); cback.classList.add('on'); } else window.MOCKIT_EDGE=false; } }
-  else if(mode==='pane?'){ if(Math.abs(dx)>8||Math.abs(dy)>8){ mode=(dx<0&&Math.abs(dx)>Math.abs(dy))?'pane':null; if(mode){ W=cpane.offsetWidth; cpane.classList.add('drag'); } } }
-  if(mode==='edge'){ e.preventDefault(); cpane.style.transform='translateX('+Math.min(0,dx-W)+'px)'; }
-  else if(mode==='pane'){ e.preventDefault(); cpane.style.transform='translateX('+Math.min(0,dx)+'px)'; }
+  if(mode==='edge?'){ if(Math.abs(dx)>8||Math.abs(dy)>8){ mode=(dx<0&&Math.abs(dx)>Math.abs(dy))?'edge':null; if(mode){ renderList(); W=cpane.offsetWidth; cpane.classList.add('drag'); cback.classList.add('on'); } else window.MOCKIT_EDGE=false; } }
+  else if(mode==='pane?'){ if(Math.abs(dx)>8||Math.abs(dy)>8){ mode=(dx>0&&Math.abs(dx)>Math.abs(dy))?'pane':null; if(mode){ W=cpane.offsetWidth; cpane.classList.add('drag'); } } }
+  if(mode==='edge'){ e.preventDefault(); cpane.style.transform='translateX('+Math.max(0,W+dx)+'px)'; }
+  else if(mode==='pane'){ e.preventDefault(); cpane.style.transform='translateX('+Math.max(0,dx)+'px)'; }
 },{capture:true,passive:false});
 function tend(){ var m=mode; mode=null; cpane.classList.remove('drag');
-  if(m==='edge') setCk(dx>60); else if(m==='pane') setCk(!(dx<-70)); else if(m==='edge?') window.MOCKIT_EDGE=false; }
+  if(m==='edge') setCk(-dx>60); else if(m==='pane') setCk(!(dx>70)); else if(m==='edge?') window.MOCKIT_EDGE=false; }
 document.addEventListener('touchend',tend,true); document.addEventListener('touchcancel',tend,true);
 
 window.MOCKITB3M={enter:function(){enter();},exit:exit,isOpen:function(){return on;},openList:function(){setCk(true);},closeList:function(){setCk(false);},listOpen:function(){return ckOpen;}};
 if(gv(K3)==='1') setTimeout(function(){enter();},0);
+})();
+</script>
+<script>
+/* All parts: a panel from the top of the screen listing every piece in the booklet, grouped by colour,
+   with how many of each are already ticked. Filters: whole build or the section in view, and "still needed". */
+(function(){
+var el=function(t,c,h){var e=document.createElement(t); if(c) e.className=c; if(h!=null) e.innerHTML=h; return e;};
+var ORDER=['White','Light Bluish Grey','Dark Bluish Grey','Black','Dark Red','Reddish Brown','Tan','Lime'];
+var tab=el('button','ap-tab','All parts'); tab.type='button'; tab.setAttribute('aria-expanded','false');
+var back=el('div','ap-back');
+var pane=el('div','ap'); pane.setAttribute('role','dialog'); pane.setAttribute('aria-label','All parts'); pane.setAttribute('aria-hidden','true');
+pane.innerHTML='<div class="ap-h"><div><p class="ap-e">Pick list</p><h2 class="ap-t">All parts</h2><p class="ap-s"></p></div><button class="ap-x" type="button" aria-label="Close">×</button></div>'+
+  '<div class="ap-f"><div class="ap-seg" role="group" aria-label="Which pieces"><button type="button" data-m="all" class="on">Whole build</button><button type="button" data-m="sec">This section</button></div>'+
+  '<label class="ap-need"><input type="checkbox"> Still needed only</label></div><div class="ap-l"></div>';
+document.body.appendChild(tab); document.body.appendChild(back); document.body.appendChild(pane);
+var list=pane.querySelector('.ap-l'), sub=pane.querySelector('.ap-s'), need=pane.querySelector('.ap-need input'), segs=[].slice.call(pane.querySelectorAll('.ap-seg button'));
+var mode='all', open=false, secs=[].slice.call(document.querySelectorAll('section.sec'));
+function secInView(){
+  var best=secs[0]; for(var i=0;i<secs.length;i++){ var r=secs[i].getBoundingClientRect(); if(r.top<window.innerHeight*0.4) best=secs[i]; }
+  var cur=document.querySelector('article.step.cur, article.step.active'); if(cur) best=cur.closest('section.sec')||best;
+  return best;
+}
+function render(){
+  var scope=mode==='sec'?secInView():document, rows=[].slice.call(scope.querySelectorAll('ul.ticks li')), g={}, tot=0, on=0;
+  rows.forEach(function(li){
+    var pid=(li.querySelector('.pid')||{}).textContent||'', pn=li.querySelector('.pn'), name=pn?pn.firstChild.textContent.trim():'', pc=li.querySelector('.pc');
+    var col=pc?pc.textContent.trim():'', sw=pc&&pc.querySelector('.sw')?pc.querySelector('.sw').style.background:'', pp=li.querySelector('.pp'), img=pp?pp.style.backgroundImage.replace(/"/g,"'"):'';
+    var cb=li.querySelector('input'), k=col+'|'+pid;
+    if(!g[k]) g[k]={col:col,sw:sw,pid:pid,name:name,img:img,n:0,on:0};
+    g[k].n++; tot++; if(cb&&cb.checked){ g[k].on++; on++; }
+  });
+  var cols={}; Object.keys(g).forEach(function(k){ var x=g[k]; (cols[x.col]=cols[x.col]||[]).push(x); });
+  var names=Object.keys(cols).sort(function(a,b){ var ia=ORDER.indexOf(a), ib=ORDER.indexOf(b); return (ia<0?50:ia)-(ib<0?50:ib)||a.localeCompare(b); });
+  var html='';
+  names.forEach(function(c){
+    var items=cols[c].sort(function(a,b){return b.n-a.n||a.name.localeCompare(b.name);}), cn=0, co=0;
+    items.forEach(function(x){cn+=x.n; co+=x.on;});
+    var shown=need.checked?items.filter(function(x){return x.on<x.n;}):items; if(!shown.length) return;
+    var label=c==='Lime'?'Lime · any colour (hidden fillers)':c;
+    html+='<section class="ap-g"><h3><span class="ap-sw" style="background:'+(items[0].sw||'#ccc')+'"></span>'+label+'<span class="ap-gc">'+co+' of '+cn+' placed</span></h3><ul>';
+    shown.forEach(function(x){
+      var left=x.n-x.on, note=(x.pid==='3958'&&c==='Tan')?' · marker only, not a part to buy':'';
+      html+='<li class="'+(left?'':'done')+'"><span class="ap-q">'+(need.checked?left:x.n)+'×</span><span class="pp" style="background-image:'+x.img+'"></span>'+
+        '<span class="ap-i"><span class="ap-p">'+x.name+'</span><span class="ap-k">'+x.pid+note+'</span></span><span class="ap-d">'+(left?x.on+' of '+x.n:'all placed')+'</span></li>';
+    });
+    html+='</ul></section>';
+  });
+  list.innerHTML=html||'<p class="ap-empty">Everything here is placed.</p>';
+  var where=mode==='sec'?(secInView().querySelector('h2')||{}).textContent:'Whole build';
+  sub.textContent=where+' · '+tot+' pieces · '+(tot-on)+' still needed';
+}
+function setOpen(v){
+  open=v; if(v) render();
+  pane.classList.toggle('on',v); back.classList.toggle('on',v);
+  pane.setAttribute('aria-hidden',v?'false':'true'); tab.setAttribute('aria-expanded',v?'true':'false');
+  document.documentElement.classList.toggle('ap-lock',v);
+}
+tab.addEventListener('click',function(){ setOpen(!open); });
+back.addEventListener('click',function(){ setOpen(false); });
+pane.querySelector('.ap-x').addEventListener('click',function(){ setOpen(false); });
+document.addEventListener('keydown',function(e){ if(open&&e.key==='Escape') setOpen(false); });
+segs.forEach(function(b){ b.addEventListener('click',function(){ mode=b.dataset.m; segs.forEach(function(x){x.classList.toggle('on',x===b);}); render(); }); });
+need.addEventListener('change',render);
+document.addEventListener('change',function(e){ if(open&&e.target&&e.target.matches&&e.target.matches('ul.ticks input')) render(); });
+window.MOCKITALLPARTS={open:function(){setOpen(true);},close:function(){setOpen(false);}};
 })();
 </script>
 </body></html>
